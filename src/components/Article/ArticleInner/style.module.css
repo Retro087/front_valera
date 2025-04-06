@@ -1,0 +1,36 @@
+.wrap{
+    display: flex;
+    text-align: left;
+}
+
+.photo{
+    margin-right: 55px;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.title{
+
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.descr{
+    font-size: 19px;
+    margin-bottom: 20px;
+}
+
+.stock{
+    display: block;
+    margin-bottom: 15px;
+}
+
+.sku{
+    font-size: 14px;
+    color: rgb(139, 139, 139);
+}
