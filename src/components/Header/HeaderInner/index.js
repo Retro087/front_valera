@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import icon from "../../../assets/icon.png";
 import tulips from "../../../assets/tulips.png";
+import cart from "../../../assets/shopping-cart.png";
 import s from "./style.module.css";
 import ContainerLayout from "../../layouts/container-layout";
 import Button from "../../../common/Button";
@@ -18,6 +19,13 @@ const HeaderInner = ({ isAuth, profile, logout }) => {
       >
         <div onClick={() => navigate("/")} className={s.logo}>
           <img src={tulips} />
+        </div>
+        <div
+          style={{ marginRight: 25 }}
+          onClick={() => navigate("/cart")}
+          className={s.logo}
+        >
+          <img src={cart} />
         </div>
         {isAuth ? (
           <div onClick={() => setHide(!hide)} className={s.profile}>

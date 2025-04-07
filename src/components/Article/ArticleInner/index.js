@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import s from "./style.module.css";
 import photoNot from "../../../assets/photonot.png";
-const ArticleInner = ({ article }) => {
+import Button from "../../../common/Button";
+const ArticleInner = ({ article, addToCart }) => {
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(article.price);
   const validate = (e) => {
     if (
-      Number(e.target.value) >= 1 &&
+      Number(e.target.value) >= 0 &&
       Number(e.target.value) <= Number(article.stockQuantity)
     ) {
       setQuantity(e.target.value);
+      setPrice(Number(article.price) * Number(e.target.value));
     }
   };
   return (
@@ -26,26 +29,31 @@ const ArticleInner = ({ article }) => {
       <div>
         <h2 className={s.title}>{article.title}</h2>
         <p className={s.descr}>{article.description}</p>
-        <div>
+        <div className={s.input_block}>
           <div
+            className={s.btn_input}
             onClick={() => {
-              if (quantity > 1) {
+              if (quantity > 0) {
                 setQuantity(quantity - 1);
+                setPrice(Number(quantity - 1) * Number(article.price));
               }
             }}
           >
             -
           </div>
           <input
+            className={s.input}
             onChange={(e) => {
               validate(e);
             }}
             value={quantity}
           />
           <div
+            className={s.btn_input}
             onClick={() => {
               if (quantity < article.stockQuantity) {
-                setQuantity(quantity + 1);
+                setQuantity(Number(quantity) + 1);
+                setPrice(Number(quantity + 1) * Number(article.price));
               }
             }}
           >
@@ -56,6 +64,12 @@ const ArticleInner = ({ article }) => {
           Количество на складе: {article.stockQuantity}
         </span>
         <span className={s.sku}>Артикул: {article.sku}</span>
+        <span className={s.price}>{price} руб.</span>
+        <Button value={"Купить"} />
+        <Button
+          onClick={() => addToCart(quantity, article.id)}
+          value={"Добавить в корзину"}
+        />
       </div>
     </div>
   );

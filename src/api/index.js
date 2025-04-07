@@ -50,3 +50,17 @@ api.authAPI = {
       .then((responce) => responce.data);
   },
 };
+
+api.cartAPI = {
+  addToCart(userId, quantity, flowerId) {
+    return instance
+      .post(`cart/`, { userId, quantity, flowerId })
+      .then((responce) => responce.data);
+  },
+  getCart(userId) {
+    return instance.get(`cart/${userId}`).then((responce) => responce.data);
+  },
+  deleteCart(id) {
+    return instance.delete(`cart/${id}`).then((responce) => responce.data);
+  },
+};

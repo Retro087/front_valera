@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FlowersList from "./FlowersList";
 import { getFlowers } from "../../store/flowersSlice/flowersSlice";
 import ContainerLayout from "../layouts/container-layout";
+import BlockTitle from "../../common/block-title";
 
 const FlowersContainer = (props) => {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const FlowersContainer = (props) => {
   return (
     <>
       <ContainerLayout width={1350}>
+        <BlockTitle title={"Все цветы"} />
         <FlowersList list={select.list} />
       </ContainerLayout>
     </>

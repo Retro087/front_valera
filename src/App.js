@@ -7,6 +7,7 @@ import Article from "./pages/article";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchAuthMe } from "./store/authSlice/authSlice";
+import CartContainer from "./components/Cart";
 
 function App() {
   const select = useSelector((state) => ({
@@ -25,6 +26,7 @@ function App() {
         <Route path="/auth" element={<AuthContainer />} />
         <Route path="/" element={<Main />} />
         <Route path="/flowers/:id" element={<Article />} />
+        <Route path="/cart" element={<CartContainer />} />
       </Routes>
     </div>
   );
