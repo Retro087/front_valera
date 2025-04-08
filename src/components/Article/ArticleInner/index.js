@@ -76,6 +76,7 @@ const ArticleInner = ({ article, addToCart, updateCart }) => {
         <span className={s.sku}>Артикул: {article.sku}</span>
         <span className={s.price}>{price} руб.</span>
 
+<<<<<<< Updated upstream
         {article.inCart ? (
           <Button value={`В корзине `} />
         ) : (
@@ -93,4 +94,6 @@ const ArticleInner = ({ article, addToCart, updateCart }) => {
   );
 };
 
+=======
+>>>>>>> Stashed changes
 export default ArticleInner;
