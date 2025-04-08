@@ -30,8 +30,10 @@ api.flowersAPI = {
   getFlowers(page, limit) {
     return instance.get(`flowers/`).then((response) => response.data);
   },
-  getFlowerById(id) {
-    return instance.get(`flowers/${id}`).then((response) => response.data);
+  getFlowerById(id, userId) {
+    return instance
+      .get(`flowers/${id}`, { userId })
+      .then((response) => response.data);
   },
 };
 

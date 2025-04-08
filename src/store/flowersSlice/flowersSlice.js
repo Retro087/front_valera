@@ -8,9 +8,13 @@ export const getFlowers = createAsyncThunk(
   }
 );
 
-export const getFlowerById = createAsyncThunk("flowers/getById", async (id) => {
-  return api.flowersAPI.getFlowerById(id);
-});
+export const getFlowerById = createAsyncThunk(
+  "flowers/getById",
+  async ({ id, userId }) => {
+    debugger;
+    return api.flowersAPI.getFlowerById(id, userId);
+  }
+);
 
 const initialState = {
   list: [],
@@ -40,6 +44,7 @@ export const flowersSlice = createSlice({
       state.load = false;
     });
     builder.addCase(getFlowerById.fulfilled, (state, action) => {
+      debugger;
       state.currentFlower = action.payload;
 
       state.load = false;

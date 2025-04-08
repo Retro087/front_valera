@@ -59,6 +59,7 @@ export const authSlice = createSlice({
       state.load = false;
     });
     builder.addCase(fetchAuthMe.fulfilled, (state, action) => {
+      debugger;
       state.myId = action.payload.user.id;
       state.isAuth = true;
       state.profile = action.payload.user;

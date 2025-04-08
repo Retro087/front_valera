@@ -20,13 +20,18 @@ const HeaderInner = ({ isAuth, profile, logout }) => {
         <div onClick={() => navigate("/")} className={s.logo}>
           <img src={tulips} />
         </div>
-        <div
-          style={{ marginRight: 25 }}
-          onClick={() => navigate("/cart")}
-          className={s.logo}
-        >
-          <img src={cart} />
-        </div>
+        {isAuth ? (
+          <div
+            style={{ marginRight: 25 }}
+            onClick={() => navigate("/cart")}
+            className={s.logo}
+          >
+            <img src={cart} />
+          </div>
+        ) : (
+          ""
+        )}
+
         {isAuth ? (
           <div onClick={() => setHide(!hide)} className={s.profile}>
             <span className={s.name}>{profile?.username}</span>

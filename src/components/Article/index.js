@@ -14,9 +14,10 @@ const ArticleContainer = () => {
     article: state.flowers.currentFlower,
     myId: state.auth.myId,
   }));
+  debugger;
   useEffect(() => {
-    dispatch(getFlowerById(params.id));
-  }, [params.id]);
+    dispatch(getFlowerById({ id: params.id, userId: select.myId }));
+  }, [params.id, select.myId]);
   const callbacks = {
     addToCart: (quantity, flowerId) => {
       dispatch(addToCart({ userId: select.myId, quantity, flowerId }));
