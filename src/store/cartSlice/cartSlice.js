@@ -16,6 +16,13 @@ export const addToCart = createAsyncThunk(
   }
 );
 
+export const updateCart = createAsyncThunk(
+  "cart/update",
+  async ({ id, quantity }) => {
+    return api.cartAPI.updateCart(id, quantity);
+  }
+);
+
 const initialState = {
   list: [],
   amount: null,
@@ -33,7 +40,6 @@ export const cartSlice = createSlice({
       state.load = false;
     });
     builder.addCase(deleteCart.fulfilled, (state, action) => {
-      debugger;
       state.list = state.list.filter(
         (i) => Number(i.id) !== Number(action.payload)
       );
@@ -55,6 +61,15 @@ export const cartSlice = createSlice({
     });
     builder.addCase(addToCart.rejected, (state, err) => {
       state.err = err;
+      state.load = false;
+    });
+    builder.addCase(updateCart.fulfilled, (state, action) => {
+      state.list = state.list.map((i) => {
+        if (Number(i.id) === Number(action.payload.cartItem.id)) {
+          return action.payload.cartItem;
+        }
+        return i;
+      });
       state.load = false;
     });
   },

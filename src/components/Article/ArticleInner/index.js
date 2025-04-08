@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import s from "./style.module.css";
 import photoNot from "../../../assets/photonot.png";
 import Button from "../../../common/Button";
-const ArticleInner = ({ article, addToCart }) => {
+const ArticleInner = ({ article, addToCart, updateCart }) => {
   const [quantity, setQuantity] = useState(1);
+  const [quantityInCart, setQuantityInCart] = useState(0);
   const [price, setPrice] = useState(article.price);
   const validate = (e) => {
     if (
@@ -16,10 +17,13 @@ const ArticleInner = ({ article, addToCart }) => {
   };
 
   useEffect(() => {
-    if (article.price) {
+    if (article) {
       setPrice(article.price);
+      setQuantityInCart(article.quantityInCart || 0);
     }
   }, [article]);
+
+  debugger;
   return (
     <div className={s.wrap}>
       <div
@@ -72,11 +76,18 @@ const ArticleInner = ({ article, addToCart }) => {
         <span className={s.sku}>Артикул: {article.sku}</span>
         <span className={s.price}>{price} руб.</span>
 
-        <Button mr="15px" value={"Купить"} />
-        <Button
-          onClick={() => addToCart(quantity, article.id)}
-          value={"Добавить в корзину"}
-        />
+        {article.inCart ? (
+          <Button value={`В корзине `} />
+        ) : (
+          <>
+            {" "}
+            <Button mr="15px" value={"Купить"} />
+            <Button
+              onClick={() => addToCart(quantity, article.id)}
+              value={"Добавить в корзину"}
+            />
+          </>
+        )}
       </div>
     </div>
   );

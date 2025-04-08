@@ -31,9 +31,7 @@ api.flowersAPI = {
     return instance.get(`flowers/`).then((response) => response.data);
   },
   getFlowerById(id, userId) {
-    return instance
-      .get(`flowers/${id}`, { userId })
-      .then((response) => response.data);
+    return instance.get(`flowers/${id}`).then((response) => response.data);
   },
 };
 
@@ -57,6 +55,11 @@ api.cartAPI = {
   addToCart(userId, quantity, flowerId) {
     return instance
       .post(`cart/`, { userId, quantity, flowerId })
+      .then((responce) => responce.data);
+  },
+  updateCart(id, quantity) {
+    return instance
+      .patch(`cart/${id}`, { quantity })
       .then((responce) => responce.data);
   },
   getCart(userId) {

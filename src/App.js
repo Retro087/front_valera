@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchAuthMe } from "./store/authSlice/authSlice";
 import CartContainer from "./components/Cart";
+import CheckoutContainer from "./components/Checkout";
 
 function App() {
   const select = useSelector((state) => ({
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/flowers/:id" element={<Article />} />
         <Route path="/cart" element={<CartContainer />} />
+        <Route path="/checkout/:pay?" element={<CheckoutContainer />} />
       </Routes>
     </div>
   );

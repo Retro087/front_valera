@@ -5,7 +5,7 @@ import { getFlowerById } from "../../store/flowersSlice/flowersSlice";
 import HeaderContainer from "../Header";
 import ArticleInner from "./ArticleInner";
 import ContainerLayout from "../layouts/container-layout";
-import { addToCart } from "../../store/cartSlice/cartSlice";
+import { addToCart, updateCart } from "../../store/cartSlice/cartSlice";
 
 const ArticleContainer = () => {
   const params = useParams();
@@ -14,7 +14,7 @@ const ArticleContainer = () => {
     article: state.flowers.currentFlower,
     myId: state.auth.myId,
   }));
-  debugger;
+
   useEffect(() => {
     dispatch(getFlowerById({ id: params.id, userId: select.myId }));
   }, [params.id, select.myId]);
@@ -22,10 +22,18 @@ const ArticleContainer = () => {
     addToCart: (quantity, flowerId) => {
       dispatch(addToCart({ userId: select.myId, quantity, flowerId }));
     },
+    updateCart: (id, quantity) => {
+      debugger;
+      dispatch(updateCart({ id: id, quantity }));
+    },
   };
   return (
     <ContainerLayout width={1050}>
-      <ArticleInner addToCart={callbacks.addToCart} article={select.article} />
+      <ArticleInner
+        updateCart={callbacks.updateCart}
+        addToCart={callbacks.addToCart}
+        article={select.article}
+      />
     </ContainerLayout>
   );
 };
