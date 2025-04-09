@@ -21,7 +21,13 @@ const Pay = ({ onPay }) => {
         value={payData.code}
         label={"Код"}
       />
-      <Button onClick={() => onPay} value={"Оплатить"} />
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+          onPay(payData);
+        }}
+        value={"Оплатить"}
+      />
     </form>
   );
 };

@@ -38,5 +38,7 @@
 }
 .price{
     font-size: 16px;
+    display: block;
     font-weight: 500;
+    margin-bottom: 15px;
 }

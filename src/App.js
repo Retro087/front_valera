@@ -9,10 +9,13 @@ import { useEffect } from "react";
 import { fetchAuthMe } from "./store/authSlice/authSlice";
 import CartContainer from "./components/Cart";
 import CheckoutContainer from "./components/Checkout";
+import WithAuth from "./components/hoc/WithAuth";
+import Chat from "./components/Chat";
 
 function App() {
   const select = useSelector((state) => ({
     isAuth: state.auth.isAuth,
+    init: state.auth.init,
   }));
 
   const dispatch = useDispatch();
@@ -21,14 +24,40 @@ function App() {
     dispatch(fetchAuthMe());
   }, []);
 
+  if (!select.init) {
+    return <div>Загрузка</div>;
+  }
+
   return (
     <div className="App">
       <Routes>
         <Route path="/auth" element={<AuthContainer />} />
         <Route path="/" element={<Main />} />
         <Route path="/flowers/:id" element={<Article />} />
-        <Route path="/cart" element={<CartContainer />} />
-        <Route path="/checkout/:pay?" element={<CheckoutContainer />} />
+        <Route
+          path="/cart"
+          element={
+            <WithAuth>
+              <CartContainer />
+            </WithAuth>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <WithAuth>
+              <Chat />
+            </WithAuth>
+          }
+        />
+        <Route
+          path="/checkout/:pay?"
+          element={
+            <WithAuth>
+              <CheckoutContainer />
+            </WithAuth>
+          }
+        />
       </Routes>
     </div>
   );

@@ -65,7 +65,29 @@ api.cartAPI = {
   getCart(userId) {
     return instance.get(`cart/${userId}`).then((responce) => responce.data);
   },
+  checkInCart(flowerId) {
+    return instance.get(`cart/${flowerId}`).then((responce) => responce.data);
+  },
   deleteCart(id) {
     return instance.delete(`cart/${id}`).then((responce) => responce.data);
+  },
+};
+
+api.orderAPI = {
+  createOrder(userId, paymentData, shippingAddress) {
+    return instance
+      .post(`order/`, { userId, paymentData, shippingAddress })
+      .then((responce) => responce.data);
+  },
+};
+
+api.chatAPI = {
+  sendMessage(message, senderType = "user") {
+    return instance
+      .post(`chats/`, { message, senderType })
+      .then((responce) => responce.data);
+  },
+  getMessages() {
+    return instance.get(`chats/`).then((responce) => responce.data);
   },
 };

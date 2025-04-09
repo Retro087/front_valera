@@ -5,6 +5,7 @@ import Login from "./login";
 import Registration from "./registration";
 
 import { fetchAuth, fetchReg } from "../../store/authSlice/authSlice";
+import Button from "../../common/Button";
 
 const AuthContainer = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const AuthContainer = () => {
       ) : (
         <Login auth={callbacks.auth} toReg={callbacks.toReg} />
       )}
+      <Button onClick={() => navigate("/")} value={"Назад"} />
     </div>
   );
 };

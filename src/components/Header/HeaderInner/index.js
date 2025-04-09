@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import icon from "../../../assets/icon.png";
 import tulips from "../../../assets/tulips.png";
 import cart from "../../../assets/shopping-cart.png";
+import chat from "../../../assets/chat.png";
 import s from "./style.module.css";
 import ContainerLayout from "../../layouts/container-layout";
 import Button from "../../../common/Button";
@@ -21,13 +22,22 @@ const HeaderInner = ({ isAuth, profile, logout }) => {
           <img src={tulips} />
         </div>
         {isAuth ? (
-          <div
-            style={{ marginRight: 25 }}
-            onClick={() => navigate("/cart")}
-            className={s.logo}
-          >
-            <img src={cart} />
-          </div>
+          <>
+            <div
+              style={{ marginRight: 25 }}
+              onClick={() => navigate("/cart")}
+              className={s.logo}
+            >
+              <img src={cart} />
+            </div>
+            <div
+              style={{ marginRight: 25 }}
+              onClick={() => navigate("/chat")}
+              className={s.logo}
+            >
+              <img src={chat} />
+            </div>
+          </>
         ) : (
           ""
         )}

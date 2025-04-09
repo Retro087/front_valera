@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import s from "./style.module.css";
 
 import Input from "../../../common/input";
+import Button from "../../../common/Button";
+import { useNavigate } from "react-router";
 const Login = (props) => {
   const [data, setData] = useState({ login: "", password: "" });
-
+  const navigate = useNavigate();
   return (
     <div className={s.wrap}>
       <div className={s.container}>
@@ -23,9 +25,14 @@ const Login = (props) => {
             <button className={s.btn}>Войти</button>
           </div>
 
-          <div className={s.reg} onClick={props.toReg}>
+          <div
+            style={{ marginBottom: 20 }}
+            className={s.reg}
+            onClick={props.toReg}
+          >
             Зарегистрироваться
           </div>
+          <Button onClick={() => navigate("/")} value={"Назад"} />
         </div>
       </div>
     </div>

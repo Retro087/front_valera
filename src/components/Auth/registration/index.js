@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import s from "./style.module.css";
 import AuthInput from "../../../common/input";
+import Button from "../../../common/Button";
+import { useNavigate } from "react-router";
 const Registration = (props) => {
   const [data, setData] = useState({ login: "", password: "", name: "" });
-
+  const navigate = useNavigate();
   return (
     <div className={s.wrap}>
       <div className={s.container}>
@@ -28,9 +30,14 @@ const Registration = (props) => {
               Зарегистрироваться
             </button>
           </div>
-          <div className={s.reg} onClick={() => props.toAuth()}>
+          <div
+            style={{ marginBottom: 25 }}
+            className={s.reg}
+            onClick={() => props.toAuth()}
+          >
             Войти
           </div>
+          <Button onClick={() => navigate("/")} value={"Назад"} />
         </div>
       </div>
     </div>

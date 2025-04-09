@@ -8,6 +8,7 @@ import Button from "../../common/Button";
 import { useNavigate, useParams } from "react-router";
 import { getCart } from "../../store/cartSlice/cartSlice";
 import Pay from "./Pay";
+import { createOrder } from "../../store/orderSlice/orderSlice";
 
 const CheckoutContainer = () => {
   const dispatch = useDispatch();
@@ -16,10 +17,13 @@ const CheckoutContainer = () => {
   const select = useSelector((state) => ({
     cart: state.cart.list,
     myId: state.auth.myId,
+    order: state.order.orderData,
   }));
-
+  const [pay, setPay] = useState(false);
   useEffect(() => {
-    dispatch(getCart(select.myId));
+    if (select.myId) {
+      dispatch(getCart(select.myId));
+    }
   }, [select.myId]);
 
   const [data, setData] = useState({
@@ -30,12 +34,38 @@ const CheckoutContainer = () => {
     flat: "",
   });
 
+  if (!select.cart.length) {
+    navigate("/");
+  }
+
+  if (select.order) {
+    return (
+      <div>
+        {select.order.shippingAddress.name}, Ваш заказ успешно оформлен.
+        Ожидайте доставку. Ваш заказ привезут по адресу:{" "}
+        {select.order.shippingAddress.city},{" "}
+        {select.order.shippingAddress.street},
+        {select.order.shippingAddress.house},{" "}
+        {select.order.shippingAddress.flat}
+      </div>
+    );
+  }
   return (
     <div>
       <HeaderContainer />
       <ContainerLayout width={1350}>
-        {params.pay === "pay" ? (
-          <Pay />
+        {pay ? (
+          <Pay
+            onPay={(paymentData) => {
+              dispatch(
+                createOrder({
+                  userId: select.myId,
+                  paymentData,
+                  shippingAddress: data,
+                })
+              );
+            }}
+          />
         ) : (
           <>
             <CartList inCheckout={true} list={select.cart} />
@@ -66,8 +96,9 @@ const CheckoutContainer = () => {
                 label={"Квартира"}
               />
               <Button
-                onClick={() => {
-                  navigate("pay");
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPay(true);
                 }}
                 value={"Дальше"}
               />

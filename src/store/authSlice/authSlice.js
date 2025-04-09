@@ -20,12 +20,21 @@ const initialState = {
   err: null,
   myId: null,
   role: null,
+  init: false,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logOut(state) {
+      state.isAuth = false;
+      state.myId = null;
+      state.profile = null;
+      state.role = null;
+      localStorage.removeItem("token");
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAuth.fulfilled, (state, action) => {
       state.isAuth = true;
@@ -65,11 +74,20 @@ export const authSlice = createSlice({
       state.profile = action.payload.user;
       state.role = action.payload.user.role;
       state.load = false;
+      state.init = true;
+    });
+    builder.addCase(fetchAuthMe.pending, (state) => {
+      state.load = true;
+    });
+    builder.addCase(fetchAuthMe.rejected, (state, err) => {
+      state.err = err;
+      state.load = false;
+      state.init = true;
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {} = authSlice.actions;
+export const { logOut } = authSlice.actions;
 
 export default authSlice.reducer;

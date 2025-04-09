@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import s from "./style.module.css";
 import photoNot from "../../../assets/photonot.png";
 import Button from "../../../common/Button";
-const ArticleInner = ({ article, addToCart, updateCart }) => {
+import { useNavigate } from "react-router";
+const ArticleInner = ({ article, addToCart, updateCart, isAuth }) => {
   const [quantity, setQuantity] = useState(1);
-  const [quantityInCart, setQuantityInCart] = useState(0);
+  const navigate = useNavigate();
+
   const [price, setPrice] = useState(article.price);
   const validate = (e) => {
     if (
@@ -18,8 +20,13 @@ const ArticleInner = ({ article, addToCart, updateCart }) => {
 
   useEffect(() => {
     if (article) {
-      setPrice(article.price);
-      setQuantityInCart(article.quantityInCart || 0);
+      setPrice(Number(article.price));
+      if (!article.stockQuantity) {
+        debugger;
+        setQuantity(0);
+      } else {
+        setQuantity(1);
+      }
     }
   }, [article]);
 
@@ -76,24 +83,34 @@ const ArticleInner = ({ article, addToCart, updateCart }) => {
         <span className={s.sku}>Артикул: {article.sku}</span>
         <span className={s.price}>{price} руб.</span>
 
-<<<<<<< Updated upstream
-        {article.inCart ? (
-          <Button value={`В корзине `} />
+        {article.stockQuantity ? (
+          article.inCart ? (
+            <Button value={`В корзине `} />
+          ) : (
+            <>
+              {isAuth ? (
+                <Button
+                  onClick={() => {
+                    addToCart(quantity, article.id);
+                  }}
+                  value={"Добавить в корзину"}
+                />
+              ) : (
+                <Button
+                  onClick={() => {
+                    navigate("/auth");
+                  }}
+                  value={"Добавить в корзину"}
+                />
+              )}
+            </>
+          )
         ) : (
-          <>
-            {" "}
-            <Button mr="15px" value={"Купить"} />
-            <Button
-              onClick={() => addToCart(quantity, article.id)}
-              value={"Добавить в корзину"}
-            />
-          </>
+          <Button value={"Нет на складе"} />
         )}
       </div>
     </div>
   );
 };
 
-=======
->>>>>>> Stashed changes
 export default ArticleInner;

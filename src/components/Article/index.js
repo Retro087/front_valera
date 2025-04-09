@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getFlowerById } from "../../store/flowersSlice/flowersSlice";
+import {
+  addInCart,
+  getFlowerById,
+} from "../../store/flowersSlice/flowersSlice";
 import HeaderContainer from "../Header";
 import ArticleInner from "./ArticleInner";
 import ContainerLayout from "../layouts/container-layout";
@@ -13,6 +16,7 @@ const ArticleContainer = () => {
   const select = useSelector((state) => ({
     article: state.flowers.currentFlower,
     myId: state.auth.myId,
+    isAuth: state.auth.isAuth,
   }));
 
   useEffect(() => {
@@ -21,6 +25,7 @@ const ArticleContainer = () => {
   const callbacks = {
     addToCart: (quantity, flowerId) => {
       dispatch(addToCart({ userId: select.myId, quantity, flowerId }));
+      dispatch(addInCart());
     },
     updateCart: (id, quantity) => {
       debugger;
@@ -30,6 +35,7 @@ const ArticleContainer = () => {
   return (
     <ContainerLayout width={1050}>
       <ArticleInner
+        isAuth={select.isAuth}
         updateCart={callbacks.updateCart}
         addToCart={callbacks.addToCart}
         article={select.article}

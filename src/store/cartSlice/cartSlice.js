@@ -5,6 +5,10 @@ export const getCart = createAsyncThunk("cart/get", async (userId) => {
   return api.cartAPI.getCart(userId);
 });
 
+export const checkInCart = createAsyncThunk("cart/check", async (flowerId) => {
+  return api.cartAPI.checkInCart(flowerId);
+});
+
 export const deleteCart = createAsyncThunk("cart/delete", async (id) => {
   return api.cartAPI.deleteCart(id);
 });

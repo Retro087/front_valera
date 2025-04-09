@@ -28,7 +28,11 @@ const initialState = {
 export const flowersSlice = createSlice({
   name: "flowers",
   initialState,
-  reducers: {},
+  reducers: {
+    addInCart: (state) => {
+      state.currentFlower.inCart = true;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getFlowers.fulfilled, (state, action) => {
       state.list = action.payload.flowers;
@@ -59,6 +63,6 @@ export const flowersSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = flowersSlice.actions;
+export const { addInCart } = flowersSlice.actions;
 
 export default flowersSlice.reducer;
