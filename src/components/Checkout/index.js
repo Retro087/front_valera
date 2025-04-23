@@ -8,7 +8,7 @@ import Button from "../../common/Button";
 import { useNavigate, useParams } from "react-router";
 import { getCart } from "../../store/cartSlice/cartSlice";
 import Pay from "./Pay";
-import { createOrder } from "../../store/orderSlice/orderSlice";
+import { clearOrder, createOrder } from "../../store/orderSlice/orderSlice";
 
 const CheckoutContainer = () => {
   const dispatch = useDispatch();
@@ -38,15 +38,36 @@ const CheckoutContainer = () => {
     navigate("/");
   }
 
+  useEffect(() => {
+    if (select.order) {
+      setTimeout(() => {
+        navigate("/");
+        dispatch(clearOrder());
+      }, 10000);
+    }
+  }, [select.order]);
+
   if (select.order) {
     return (
-      <div>
+      <div
+        style={{
+          marginTop: 100,
+          padding: 15,
+          width: "max-content",
+          border: "1px solid black",
+          margin: "100px auto",
+          borderRadius: 10,
+        }}
+      >
         {select.order.shippingAddress.name}, Ваш заказ успешно оформлен.
-        Ожидайте доставку. Ваш заказ привезут по адресу:{" "}
-        {select.order.shippingAddress.city},{" "}
-        {select.order.shippingAddress.street},
-        {select.order.shippingAddress.house},{" "}
-        {select.order.shippingAddress.flat}
+        <p>
+          Ожидайте доставку. Ваш заказ привезут по адресу:{" "}
+          {select.order.shippingAddress.city},{" "}
+          {select.order.shippingAddress.street},
+          {select.order.shippingAddress.house},{" "}
+          {select.order.shippingAddress.flat}
+        </p>
+        <button onClick={() => navigate("/")}>На главную</button>
       </div>
     );
   }

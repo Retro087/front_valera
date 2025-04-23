@@ -25,7 +25,11 @@ const initialState = {
 export const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    clearOrder: (state) => {
+      state.orderData = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createOrder.fulfilled, (state, action) => {
       debugger;
@@ -37,6 +41,6 @@ export const orderSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {} = orderSlice.actions;
+export const { clearOrder } = orderSlice.actions;
 
 export default orderSlice.reducer;
